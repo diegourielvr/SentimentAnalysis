@@ -1,0 +1,9 @@
+conda install pandas
+conda install tensorflow
+conda install -c conda-forge spacy
+python -m spacy download en_core_web_sm
+python -m spacy download es_core_news_sm
+pip install symspellpy
+conda install -c conda-forge langdetect
+conda install nltk
+conda install gensim

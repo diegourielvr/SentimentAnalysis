@@ -1,0 +1,12 @@
+# Byte-compiled
+__pycache__/
+*.py[cod]
+
+# Unit test / coverage reports
+.pytest_cache/
+
+# Environments
+.venv
+
+# IntelliJ project files
+.idea/
