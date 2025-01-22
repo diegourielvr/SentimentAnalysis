@@ -262,13 +262,12 @@ def cargar_modelo():
     df["tokens"] = tokenizar(df["comentario"].tolist())
 
     # Obtener embeddings de cada tokens
-    embeddings = df["tokens"].apply(lambda documento: obtener_embedding(documento, wv)).tolist()
+    df["embeddings"] = df["tokens"].apply(lambda documento: obtener_embedding(documento, wv))
 
     # Rellenar los embeddings (mismo numero de secuencias para cada documento)
     # df["embeddings_padded"] = df["embeddings"].apply(lambda x: padding_embeddings(x))
 
-    embeddings_padded = pad_sequences(embeddings, maxlen=dim_embeddings, dtype='float32', padding='post', truncating='post')
-    print(f"Tamaño de las secuencias: {embeddings_padded.shape}")
+    embeddings_padded = pad_sequences(df["embeddings"], maxlen=dim_embeddings, dtype='float32', padding='post', truncating='post')
 
     df["embeddings_padded"] = list(embeddings_padded)
 
@@ -281,11 +280,6 @@ def cargar_modelo():
     y = np.array(df['sentimiento'])  # Las etiquetas numéricas
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-    print("y_train")
-    print(pd.DataFrame(y_train,columns=["sentimiento"]).value_counts())
-    print("y_test")
-    print(pd.DataFrame(y_test,columns=["sentimiento"]).value_counts())
 
     # Definir el modelo LSTM
     model = Sequential()
@@ -308,7 +302,7 @@ def cargar_modelo():
     model.summary()
 
     # Entrenar el modelo
-    model.fit(X_train, y_train, batch_size=64, epochs=10,
+    model.fit(X_train, y_train, batch_size=64, epochs=20,
               validation_data=(X_test, y_test))
 
     # Guardar el modelo
@@ -347,12 +341,20 @@ def probar_embeddings():
 
 
 if "__main__" == __name__:
+    # Cargar los datos
+    # Estadísticas de los datos
+    # Limpiar los datos para su preprocesamiento
+    # Estadísticas de los datos limpios
+    # Preprocesamiento con NLP de los datos
 
     #limpieza_preprocesamiento(lemmas=True, stemming=False)
 
+    # Entrenar modelo embeddings
     #crear_embeddings()
 
-    cargar_modelo()
-
-    #probar_embeddings()
+    # Crear y enrtenar Red neuronal
+    #cargar_modelo()
+    # Accuracy, Recall, F1 score
+    # Matriz de confusion
+    probar_embeddings()
 
